@@ -1,0 +1,43 @@
+clearvars;
+close all;
+clc;
+
+%
+phobos = imread('phobos.bmp');
+
+%% 
+figure();
+subplot(1,2,1);
+imshow(phobos);
+title('original');
+subplot(1,2,2);
+histeq(phobos);
+title('histeq');
+
+%%
+figure(2);
+load histogramZadany;
+
+plot(histogramZadany);
+title('histogramZadany');
+
+%% matching
+figure(3);
+phobos_matched = histeq(phobos, histogramZadany);
+subplot(1,3,1);
+imshow(phobos_matched);
+title('pierwotnie');
+
+subplot(1,3,2);
+adapthisteq(phobos_matched,256);
+title('wyrownane CLAHE');
+
+
+phobos_streched = imadjust(phobos);
+[H,x] = imhist(phobos_streched,256);
+C = cumsum(H);
+C2 = C/(max(C)/max(H));
+
+subplot(1,3,3);
+imshow(phobos_streched);
+title('rociagniete');
