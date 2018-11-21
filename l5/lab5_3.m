@@ -5,7 +5,7 @@ clc;
 %% read
 bart = imread('bart.bmp');
 
-bartBW = bart > 192 & bart < 205;
+bartBW = bart > 192 & bart < 210;
 %bartBW = uint8(bartBW, []);
 
 figure;
