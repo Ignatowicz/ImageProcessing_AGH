@@ -26,7 +26,7 @@ end
 img_bil_array = img_array;
 
 for i = 1 : 5
-    img_bil_array{i} = biliteral(img_array{i}, local_window);
+    img_bil_array{i} = bilateral(img_array{i}, local_window);
 end
 
 %% show results
@@ -36,14 +36,14 @@ for i = 1 : 5
     
     subplot(1, 3, 1);
     imshow(uint8(img_array{i}), []);
-    title('original image');
+    title('original');
     
     subplot(1, 3, 2);
     imshow(uint8(img_conv_array{i}), []);
-    title('convoluted image');
+    title('convolution');
     
     subplot(1, 3, 3);
     imshow(uint8(img_bil_array{i}), []);
-    title('biliterated image');
+    title('bilateration');
     
 end
