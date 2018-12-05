@@ -3,8 +3,8 @@ clearvars;
 clc;
 
 %% read
-%image = imread('kw.bmp');
-image = imread('jet.bmp');
+image = imread('kw.bmp');
+%image = imread('jet.bmp');
 
 load('maskiPP.mat');
 
@@ -28,8 +28,10 @@ OW = sqrt((conv2(image, S1, 'same')).^2 + (conv2(image, S2, 'same')).^2);
 OW2 = abs(conv2(image, S1, 'same')) + abs(conv2(image, S2, 'same'));
 
 figure;
+subplot(1, 2, 1);
 imshow(OW, []);
-
-figure;
+title('filtr kombinowany \^2');
+subplot(1, 2, 2);
 imshow(OW2, []);
+title('filtr kombinowny abs');
 
