@@ -43,8 +43,8 @@ imshow(hough(obraz, 'RhoResolution', 0.1, 'ThetaResolution', 0.5), []);
 title('transformacja hougha - dwa punkty');
 
 % odczytane za pomoca data cursor
-rho = 118;
-theta = 154;
+rho = 135;  %y
+theta = 17; %x
 
 [H, T, R] = hough(obraz, 'RhoResolution', 0.1, 'ThetaResolution', 0.5);
 
