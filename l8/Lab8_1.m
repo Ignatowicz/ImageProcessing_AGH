@@ -88,7 +88,7 @@ SE2 = [1 0 1; 0 0 0; 1 0 1];
 hom_hitmiss1 = bwhitmiss(hom, SE1);
 hom_hitmiss2 = bwhitmiss(hom, SE2);
 
-hom_hitmiss = bwhitmiss(hom_hitmiss1, SE2);
+hom_hitmiss = bwhitmiss(hom, SE1, SE2);
 
 figure(5);
 subplot(2, 2, 1);
