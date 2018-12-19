@@ -27,9 +27,9 @@ subplot(3,3,4);
 imshow(erodedDiff);
 title('roznica erozja');
 
-dilatatedDiff = ferrari - dilatated;
+dilatatedDiff = dilatated - eroded;
 subplot(3,3,5);
-imshow(dilatatedDiff);
+imshow(dilatatedDiff, []);
 title('roznica dylatacja');
 
 subplot(3,3,7);

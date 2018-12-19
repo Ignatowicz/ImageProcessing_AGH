@@ -68,7 +68,7 @@ imshow(ertka_close);
 title('close');
 
 %% usuniecie dziur z ertki
-ertka_clear = imdilate(imdilate(imclose(imopen(I, SE), SE), SE), SE);
+ertka_clear = (imclose(imopen(I, SE), SE));
 
 figure(4);
 subplot(1, 2, 1);
