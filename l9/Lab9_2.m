@@ -27,7 +27,7 @@ title('original 11x11 - (2,3; 9,7)');
 
 subplot(1, 2, 2);
 imshow(hough(obraz, 'RhoResolution', 0.1, 'ThetaResolution', 0.5), []);
-title('transformacja hougha - dwa punkty');
+title('transformacja hougha - 2 punkty');
 
 % trzeci i czwarty punkt
 obraz(5, 5) = 1;
@@ -40,7 +40,7 @@ title('original 11x11 - 4 punkty');
 
 subplot(1, 2, 2);
 imshow(hough(obraz, 'RhoResolution', 0.1, 'ThetaResolution', 0.5), []);
-title('transformacja hougha - dwa punkty');
+title('transformacja hougha - 4 punkty');
 
 % odczytane za pomoca data cursor
 rho = 135;  %y

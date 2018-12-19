@@ -5,11 +5,14 @@ clc;
 %% transformacja hougha dla pojedynczego obrazu
 kwadraty = imread('kwadraty.png');
 
+figure(1);
+imshow(kwadraty);
+
 krawedzie = edge(kwadraty, 'canny');
 
 [H, T, R] = hough(krawedzie);
 
-figure(1);
+figure(2);
 imshow(H, []);
 
 peaks = houghpeaks(H, 8);
@@ -18,7 +21,8 @@ plot(peaks, 'o');
 hold off;
 
 lines = houghlines(krawedzie, T, R, peaks, 'FillGap', 5, 'MinLength', 7);
-figure(2);
+
+figure(3);
 imshow(krawedzie);
 hold on;
 max_len = 0;

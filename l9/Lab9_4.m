@@ -32,7 +32,7 @@ krawedzie = edge(I, 'canny');
 
 [H, T, R] = hough(krawedzie);
 
-figure(3);
+figure(2);
 imshow(H, []);
 peaks = houghpeaks(H, 8);
 hold on;
@@ -40,7 +40,7 @@ plot(peaks, 'o');
 hold off;
 
 lines = houghlines(krawedzie, T, R, peaks, 'FillGap', 5, 'MinLength', 7);
-figure(2);
+figure(3);
 imshow(krawedzie);
 hold on;
 max_len = 0;
