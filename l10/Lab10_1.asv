@@ -36,15 +36,15 @@ while iStack > 0
     iStack = iStack - 1;
     
     if 1< nX && nX < width && 1 < nY && nY < height
-       for j = nY - 1 : nY + 1
-           for i = nX - 1 : nX + 1
-                if(abs(knee(nY,nX) - knee(j, i)) < 4 && (visited(j, i) == 0))
+       for j = nY-1:nY+1
+           for I = nX-1:nX+1
+               length = abs(KneeD(nY,nX) - KneeD(J,I));
+                if(length < 4 && (visited(J,I) == 0))
                    iStack = iStack+1;
-                   stack(iStack,:) = [j, i];
-                   segmented(j, i) = 1;
+                   stack(iStack,:) = [J,I];
+                   segmented(J,I) = 1;
                 end
-                
-            visited(j, i) = 1;
+            visited(J,I) = 1;
            end
        end      
     end
