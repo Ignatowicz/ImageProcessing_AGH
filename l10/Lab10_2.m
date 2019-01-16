@@ -18,15 +18,15 @@ figure(2);
 imshow(imageH, []);
 title('wektor H');
 
-%% variables
-sLimit = 4;
-vLimit = 0.05;
-index = 1;
+%% variables - podane w tresci zadania
+sLimit = 4;     % minimalny obszar podobszaru
+vLimit = 0.05;  % prog porownawczy dla odchylenia standardowego dla podobszaru
+index = 1; % przechowuje ilosc obszarow
 
 [y, x] = size(imageH);
 
-segRes = zeros(y, x);
-MRes = zeros(y, x);
+segRes = zeros(y, x); % macierz zawierajaca indeksy punktow w podobszarach
+MRes = zeros(y, x); % macierz zawierajaca srednie wartosci dla pol
 
 
 %% Segmentacja przez podzial
@@ -40,20 +40,20 @@ while i <= index
        [yF, xF] = find(IB, 1, 'first');
        
        square = strel('square', 3);
-       neighbours = imdilate(IB, square);
-       diff = imabsdiff(neighbours, IB);
-       pointMult = diff .* segRes;
-       nonZeros = nonzeros(pointMult);
-       uniqued = unique(nonZeros);
+       neighbours = imdilate(IB, square);   % sasiedzi danego obszaru
+       diff = imabsdiff(neighbours, IB);    % odjecie maski oryginalnej
+       pointMult = diff .* segRes;          % wyciecie fragmentu macierzy
+       nonZeros = nonzeros(pointMult);      % elementy niezerowe
+       uniqued = unique(nonZeros);          % elementy unikalne
        
        isJoined = 0;
-       for neighbour = 1 : numel(uniqued)
-           IBS = segRes == uniqued(neighbour);
+       for neighbour = 1 : numel(uniqued)   % wektor z indeksami sasiadow
+           IBS = segRes == uniqued(neighbour);  % maska dla obszaru sasiedniego
            
-           [yFS, xFS] = find(IBS, 1, 'first');
+           [yFS, xFS] = find(IBS, 1, 'first');  % lewy gorny róg - wyciecie maski
            
            colorDiff = abs(MRes(yF,xF) - MRes(yFS, xFS));
-           if colorDiff <  5/255
+           if colorDiff <  5/255    % sprawdzamy czy mozemy polaczyc z obszarem
                segRes(IBS) = i;
                isJoined = 1;
            end
@@ -76,9 +76,9 @@ title('segmentacja przez podzial');
 % I metoda
 U = unique(segRes);     % unikalne indeksy
 
-for i = 1 : numel(U)
+for i = 1 : numel(U)        % eliminacja podobszarow o rozmiarze mniejszym niz zadany
     C = segRes == U(i);     % wycinana maska dla danego indeksu
-    if sum(C) < 35
+    if sum(C) < 40
        segRes(C) = 0; 
     end
 end
@@ -90,11 +90,12 @@ imshow(fileredImage1);
 title('po filtracji I metoda');
 
 % filtracja II metoda
+% przeindeksowanie na pierwsze N liczb calkowitych
 U = unique(segRes);
 
-for ii = 1 : numel(U)
+for ii = 1 : numel(U)   % wycinanie maski
     C = segRes == U(ii);
-    segRes(C) = ii;
+    segRes(C) = ii; % przypisanie iteratora do wynikow
 end
 
 fileredImage2 = label2rgb(segRes);

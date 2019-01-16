@@ -13,15 +13,15 @@ imshow(knee);
 %x = floor(x)
 %y = floor(y)
 
-x = 236;
-y = 347;
+x = 252;
+y = 329;
 
 
 knee = double(knee);
 
 [width, height] = size(knee);
 
-%% pierwszy sposób
+%% pierwszy sposob
 visited = zeros(width, height);
 segmented = zeros(width, height);
 stack = zeros(10000, 2);
@@ -32,30 +32,34 @@ segmented(x, y) = 1;
 stack(iStack, 1:2) = [x, y];
 
 while iStack > 0
-    nY = stack(iStack, 1);
-    nX = stack(iStack, 2);
+    nX = stack(iStack, 1);
+    nY = stack(iStack, 2);
     iStack = iStack - 1;
     
     if 1< nX && nX < width && 1 < nY && nY < height
-       for j = nY - 1 : nY + 1
-           for i = nX - 1 : nX + 1
-                if(abs(knee(nY,nX) - knee(j, i)) < 4 && (visited(j, i) == 0))
-                   iStack = iStack+1;
-                   stack(iStack,:) = [j, i];
-                   segmented(j, i) = 1;
+        
+        for i = nX-1 : nX + 1
+            for j = nY-1 : nY + 1      
+                if(abs(knee(nX, nY) - knee(i, j)) < 4 && (visited(i, j) == 0))
+                    iStack = iStack + 1;
+                    stack(iStack, :) = [i, j];
+                    segmented(i, j) = knee(i, j);
+                    
+                elseif i == nX && j == nY
+                    segmented(i, j) = knee(i, j);
                 end
-                
-            visited(j, i) = 1;
-           end
-       end      
+                visited(i, j) = 1;
+
+            end
+        end    
     end
 end
 
 figure(2);
-imshow(segmented,[]);
-title('pierwszy sposób');
+imshow(uint8(segmented),[]);
+title('pierwszy sposob');
 
-%% drugi sposób
+%% drugi sposob
 visited = zeros(width, height);
 segmented = zeros(width, height);   % rezultaty segmentacji
 stack = zeros(10000, 2);            % stos 
@@ -97,8 +101,8 @@ while iStack > 0
 end
 
 figure(3);
-imshow(segmented,[]);
-title('drugi sposób');
+imshow(uint8(segmented),[]);
+title('drugi sposob');
 
 %% gauss & imfilter
 gauss = fspecial('gaussian');
