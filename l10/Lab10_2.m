@@ -9,14 +9,14 @@ umbrella = imread('umbrealla.png');
 
 figure(1);
 imshow(umbrella, []);
-title('original image');
+title('Original');
  
 imageHSV = rgb2hsv(umbrella);
 imageH = double(imageHSV(:, :, 1));
 
 figure(2);
 imshow(imageH, []);
-title('H vector');
+title('wektor H');
 
 %% variables
 sLimit = 4;
@@ -34,9 +34,9 @@ split(imageH, 1, 1, x, y);
 
 i = 0;
 while i <= index
-   IB = segRes == i;
+   IB = segRes == i;        % aktualny indeks maski pikseli
    
-   if any(IB(:))
+   if any(IB(:))            % jesli puste(same zera) to nie liczymy
        [yF, xF] = find(IB, 1, 'first');
        
        square = strel('square', 3);
@@ -70,25 +70,35 @@ end
 
 figure(3);
 imshow(segRes,[]);
+title('segmentacja przez podzial');
 
-%% filtracja
-U = unique(segRes);
+%% filtracja 
+% I metoda
+U = unique(segRes);     % unikalne indeksy
 
 for i = 1 : numel(U)
-    C = segRes == U(i);
+    C = segRes == U(i);     % wycinana maska dla danego indeksu
     if sum(C) < 35
        segRes(C) = 0; 
     end
 end
 
-U = unique(segRes);
-
-for i = 1 : numel(U)
-    C = segRes == U(i);
-    segRes(C) = i;
-end
-
-finalImage = label2rgb(segRes);
+fileredImage1= label2rgb(segRes);
 
 figure(4);
-imshow(finalImage);
+imshow(fileredImage1);
+title('po filtracji I metoda');
+
+% filtracja II metoda
+U = unique(segRes);
+
+for ii = 1 : numel(U)
+    C = segRes == U(ii);
+    segRes(C) = ii;
+end
+
+fileredImage2 = label2rgb(segRes);
+
+figure(5);
+imshow(fileredImage2);
+title('po filtracji II metoda');
