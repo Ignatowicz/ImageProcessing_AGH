@@ -12,7 +12,7 @@ function split(image, xS, yS, xE, yE)
         MRes(yS:yE, xS:xE) = meanValue;
         index = index + 1;
         
-        % jesli podobszar nie jest jednorodny to dokonujemy podzialu na 4
+        % jesli podobszar nie jest jednorodny to rekurencyjnie dokonujemy podzialu na 4
         % czesci
     else
         splitX = floor((xE + xS) / 2);
