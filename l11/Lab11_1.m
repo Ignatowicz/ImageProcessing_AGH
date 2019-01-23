@@ -60,6 +60,9 @@ subplot(2,1,2);
 imshow(reversedImage, []);
 title('po odwrotnym fourierze');
 
-% odpowiedz na pytanie:
+% odpowiedz na pytania:
+%1
+% biale piksele na obrazie amplitudy to wysokie czestotliwosci
+%2
 % wydaje sie jakby kierunek krawedzi na F-obrazie byl odbiciem lustrzanym
-% wzgledem oryginalnych krawedzi (szczegolnie dorbze widac na kole)
+% wzgledem oryginalnych krawedzi (szczegolnie dobrze widac na kole)

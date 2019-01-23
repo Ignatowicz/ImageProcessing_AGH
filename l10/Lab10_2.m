@@ -12,7 +12,7 @@ imshow(umbrella, []);
 title('Original');
  
 imageHSV = rgb2hsv(umbrella);
-imageH = double(imageHSV(:, :, 1));
+imageH = double(imageHSV(:, :, 1)); % obraz poziomow jasnosci
 
 figure(2);
 imshow(imageH, []);
@@ -34,7 +34,7 @@ split(imageH, 1, 1, x, y);
 
 i = 0;
 while i <= index
-    % przypisuje do macierzy IB elementy o tkaim samym indeksie
+    % przypisuje do macierzy IB elementy o takim samym indeksie
    IB = segRes == i;        % aktualny indeks maski pikseli
    
    if any(IB(:))            % jesli puste(same zera) to nie liczymy
@@ -51,10 +51,10 @@ while i <= index
        for neighbour = 1 : numel(uniqued)   % wektor z indeksami sasiadow
            IBS = segRes == uniqued(neighbour);  % maska dla obszaru sasiedniego
            
-           [yFS, xFS] = find(IBS, 1, 'first');  % lewy gorny rog - wyciecie maski
+           [yFS, xFS] = find(IBS, 1, 'first');  % lewy gorny rog - wyciecie maski , pierwszy niezerowy element
            
            colorDiff = abs(MRes(yF,xF) - MRes(yFS, xFS));
-           if colorDiff <  5/255    % sprawdzamy czy mozemy polaczyc z obszarem
+           if colorDiff <  5/255    % sprawdzamy czy mozemy polaczyc z obszarem, kryterium to niewieli prog
                segRes(IBS) = i;
                isJoined = 1;
            end

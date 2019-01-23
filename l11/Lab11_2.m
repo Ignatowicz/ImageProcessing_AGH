@@ -42,11 +42,8 @@ Hd = ones(512); % 512 to rozmiar obrazka
 
 r = sqrt(f1.^2 + f2.^2); % wektor promienia kola w dziedzinie czestotliwosci
 
-Hd((r>0.1)) = 0;    % generuje maske usuwajaco wszytsko poza okregiem o promieniu 0,1
+Hd((r<0.8)) = 0;    % generuje maske usuwajaco wszytsko poza okregiem o promieniu 0,3
 
-Hd_gornoprzepustowy = ones(512); % propozycja filtra gornoprzepustowego
-Hd_gornoprzepustowy((r<0.7)) = 0;   
-%Hd_gornoprzepustowy((r<0.1) | (r>0.7) ) = 0;
 
 figure(2);
 colormap(jet(64)); 
@@ -63,6 +60,7 @@ imshow(nI, []);
 title('przefiltrowany fourier');
 
 % okno hanninga 2D
+Hd((r>0.1)) = 0;    % generuje maske usuwajaco wszytsko poza okregiem o promieniu 0,1
 h = fwind1(Hd, hanning(21));     % filtr 2D
 [H f1 f2] = freqz2(h, 512, 512);
 
@@ -79,9 +77,10 @@ imshow(nI2, []);
 title('hanning');
 
 % filtr gaussa
-gauss = fspecial('gaussian');
-[H_gauss f1 f2] = freqz2(gauss, 512, 512);
-grayed = mat2gray(H_gauss);
+gauss = fspecial('gaussian', size(I), 32); % std_odchylenie, im wieksze tym mniej rozmyte
+%[H_gauss f1 f2] = freqz2(gauss, 512, 512);
+%grayed = mat2gray(H_gauss);
+grayed = mat2gray(gauss);
 
 figure(6);
 mesh(f1, f2, grayed);

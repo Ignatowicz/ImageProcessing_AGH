@@ -1,7 +1,7 @@
 function split(image, xS, yS, xE, yE)
     global sLimit vLimit segRes index MRes
     
-    subImage = image(yS:yE, xS:xE); % tworzy podzia na mniejsze obrazy
+    subImage = image(yS:yE, xS:xE); % tworzy podzial na mniejsze obrazy
     vectorSubImage = subImage(:);
     
     meanValue = mean(vectorSubImage); % srednia wartosc dla rozwazanego obrazu
