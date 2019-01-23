@@ -1,6 +1,6 @@
-clear;
-clc;
+clearvars;
 close all;
+clc;
 
 %% usuwanie zaklocen okresowych
 
