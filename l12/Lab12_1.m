@@ -2,7 +2,7 @@ clearvars;
 close all;
 clc;
 
-%%
+%% dwuprzebiegowy algorytm indeksacji
 image = imread('ccl1.png');
 
 figure(1);
@@ -21,30 +21,33 @@ for I = 1:100
 end
 
 %% first pass - pierwsza faza indeksacji
-for i = 2:X-1
+for i = 2:X-1 % pomijamy piksele na brzegu obrazu dla uproszczenia algorytmu
     for j = 2:Y-1
         if(image(i,j) ~= 0) % rozne od zera
             
+            % analiza otoczenia badanego piksela obrazu
             % przyklad rozwiazania z laborki
             A = nImage(i-1, j-1);
             B = nImage(i-1, j);
             C = nImage(i-1, j+1);
             D = nImage(i, j-1);
-            sasiedzi = [A,B,C,D];
+            sasiedzi = [A, B, C, D];
 
-            if sum(sasiedzi) == 0 % a
-                nImage(i,j) = L;
+            % a) wsyztskie piksele otoczenia naleza do tla
+            if sum(sasiedzi) == 0
+                nImage(i, j) = L +  1;
                 L = L+1;
             else
                 sasiedzi1 = nonzeros(sasiedzi);
                 minimum = min(sasiedzi1);
                 maximum = max(sasiedzi1);
 
-                if(minimum == maximum)  % b
+                % b) jeden lub wiecej ma juz etykiete L
+                if(minimum == maximum)
                     nImage(i,j) = maximum;
                 else
-                    % c
-                    id = union(minimum, maximum, id);
+                    % c) w otoczeniu sa piksele o roznych etykietach
+                    id = union(minimum, maximum, id); % polacz dwa obiekty, stykajace sie ze soba
                     nImage(i,j) = minimum;
                 end
             end 
@@ -54,11 +57,11 @@ end
 
 
 figure(2);
-subplot(1,3,1); 
+subplot(1, 3, 1); 
 imshow(image); 
 title('oryginal');
 
-% przekodowanie LUT
+% przekodowanie LUT - aby poprawnie poetykietowac piksele
 lut = zeros(100);
 for I = 1:100
    lut(I) = root(id(I), id); 
